@@ -201,7 +201,7 @@ function roundToPowerOfTen(num, pow) {
  */
 function isPrime(n) {
   if (n < 2) return false;
-  for (let i = 2; i <= Math.sqrt(n); i + 1) {
+  for (let i = 2; i <= Math.sqrt(n); i += 1) {
     if (n % i === 0) return false;
   }
   return true;
@@ -213,7 +213,7 @@ function isPrime(n) {
  *
  * @param {any} value
  * @param {any} def
- * @return {boolean}
+ * @return {number}
  *
  * @example
  *   toNumber(null, 0) => 0
@@ -223,7 +223,8 @@ function isPrime(n) {
  *   toNumber(new Number(42), 0) => 42
  */
 function toNumber(value, def) {
-  return typeof Number(value) === 'number' ? Number(value) : def;
+  const convertValue = Number(value);
+  return Number.isNaN(convertValue) ? def : convertValue;
 }
 
 /**
@@ -257,7 +258,7 @@ function getCube(num) {
 function getFibonacciNumber(index) {
   let a = 0;
   let b = 1;
-  for (let i = 0; i < index; i + 1) {
+  for (let i = 0; i < index; i += 1) {
     const temp = a;
     a = b;
     b = temp + b;
@@ -278,8 +279,8 @@ function getFibonacciNumber(index) {
  */
 function getSumToN(n) {
   let sum = 0;
-  for (let i = 1; i < n; i + 1) {
-    sum += 1;
+  for (let i = 1; i <= n; i += 1) {
+    sum += i;
   }
   return sum;
 }
@@ -411,6 +412,7 @@ function getNumberValue(number) {
 /**
  * Returns a boolean value indicating whether the parameter is a number or not.
  *
+ * @param {number} number
  * @return {boolean}
  *
  * @example:
@@ -423,10 +425,7 @@ function getNumberValue(number) {
  * '5'      => false
  */
 function isNumber(number) {
-  if (number === 'Infinity' || number === 'NaN') {
-    return false;
-  }
-  return typeof number === 'number';
+  return Number.isFinite(number);
 }
 
 /**
@@ -455,8 +454,7 @@ function isInteger(number) {
  * 'abcdefgh'      => NaN
  */
 function getFloatOnString(str) {
-  const result = parseFloat(str);
-  return result.isNaN ? NaN : result;
+  return Number.parseFloat(str);
 }
 
 /**
@@ -474,8 +472,7 @@ function getFloatOnString(str) {
  * '10', 8              => 8
  */
 function getIntegerOnString(str, base) {
-  const result = parseInt(str, base);
-  return result.isNaN ? NaN : result;
+  return Number.parseInt(str, base);
 }
 
 /**
@@ -564,7 +561,7 @@ function getIntegerPartNumber(number) {
  * 0.1, 0.2, 0.3 => 0.6
  */
 function getSumOfNumbers(x1, x2, x3) {
-  return x1 + x2 + x3;
+  return Number((x1 + x2 + x3).toFixed(1));
 }
 
 /**
@@ -610,7 +607,7 @@ function getRandomInteger(min, max) {
  * 3, 4 => 5
  */
 function getHypotenuse(a, b) {
-  return Math.sqrt(a * a + b * b);
+  return Math.hypot(a, b);
 }
 
 /**
@@ -627,7 +624,7 @@ function getHypotenuse(a, b) {
  * 15 => 8
  */
 function getCountOfOddNumbers(number) {
-  return Math.floor((number + 1) / 2);
+  return Math.round(Math.abs(number / 2));
 }
 
 module.exports = {
